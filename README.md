@@ -19,3 +19,7 @@ Hard: ~200ms
 Hardest: ~20000ms
 
 Because of the random nature of WFC solve times can vary greatly, I have seen hardest solve in 4 000ms and other times 35 000 ms. But it will always find a solution eventually.
+
+## Improvement
+
+The best improvement that can be made would be to make the 'rollback' feature smarter, currently it always goes back to step 0 but if we can make it rather choose a 'stable' snapshot in the past to cut down on regeneration it would greatly speed up the process.
