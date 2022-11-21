@@ -12,8 +12,12 @@
         {
             _board = new List<Tile>();
 
-            var lines = input.Trim().Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            for (int x = 0; x < lines.Length; x++)
+            var lines = input.Trim().Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            Name = lines[0];
+            lines.RemoveAt(0);
+
+            for (int x = 0; x < lines.Count; x++)
             {
                 // change . to 0 to allow support for importing from https://qqwing.com/generate.html easily
                 var line = lines[x].Replace('.', '0').Trim();
@@ -26,9 +30,10 @@
             CalculateRowsAndColumns();
         }
 
-        private Board(List<Tile> board)
+        private Board(List<Tile> board, string name)
         {
             // only used to clone a new board
+            Name = name;
             _board = new List<Tile>();
             foreach (var tile in board)
             {
@@ -37,6 +42,8 @@
 
             CalculateRowsAndColumns();
         }
+
+        public string Name { get; }
 
         public bool CalculateEntropy()
         {
@@ -57,11 +64,6 @@
 
                 if (!tile.IsSolved() && tile.GetEntropy() == 0)
                 {
-                    // messages are just here to help debugging when unsolvable state is hit
-                    // Console.WriteLine($"Unsolvable state: {tile.X}:{tile.Y}");
-                    // Console.WriteLine("Row " + string.Join("", GetRow(tile)));
-                    // Console.WriteLine("Column " + string.Join("", GetColumn(tile)));
-                    // Console.WriteLine("Square " + string.Join("", GetSquare(tile)));
                     return false;
                 }
             }
@@ -71,7 +73,7 @@
 
         public Board Clone()
         {
-            return new Board(_board);
+            return new Board(_board, Name);
         }
 
         public void Collapse()
@@ -133,6 +135,7 @@
             }
             return true;
         }
+
         private void CalculateRowsAndColumns()
         {
             _columns = _board.GroupBy(g => g.Y).Select(r => r.ToList()).ToList();

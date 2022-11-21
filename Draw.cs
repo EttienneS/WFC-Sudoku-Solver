@@ -4,6 +4,7 @@
     {
         public static void Board(Board board)
         {
+
             for (int x = 0; x < 9; x++)
             {
                 if (x % 3 == 0)

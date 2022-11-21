@@ -12,7 +12,6 @@ var demoMode = false;
 
 foreach (var puzzle in input.Split('-'))
 {
-    Console.WriteLine("Working...");
 
     var sw = Stopwatch.StartNew();
 
@@ -27,6 +26,8 @@ foreach (var puzzle in input.Split('-'))
     }
 
     var snapshot = board.Clone();
+
+    Console.WriteLine($"Working on {board.Name}...");
 
     var i = 0;
     while (!board.IsSolved())
@@ -56,7 +57,7 @@ foreach (var puzzle in input.Split('-'))
         if (demoMode)
         {
             Console.Clear();
-            Console.WriteLine(i);
+            Console.WriteLine($"{board.Name} : {i}");
             Draw.Board(board);
             Thread.Sleep(100);
         }
@@ -84,7 +85,7 @@ foreach (var puzzle in input.Split('-'))
     else
     {
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"Done! Board solved in {i} iterations in {sw.ElapsedMilliseconds}ms. Press any key to go to next.");
+        Console.WriteLine($"Done! {board.Name} board solved in {i} iterations in {sw.ElapsedMilliseconds}ms. Press any key to go to next.");
     }
     Console.ReadKey();
     Console.Clear();
