@@ -10,6 +10,12 @@ var input = File.ReadAllText("input.txt");
 // writing to console is fairly slow actually so if you want to measure performance set this to false:
 var demoMode = false;
 
+if (demoMode)
+{
+    Console.WriteLine("Demo mode, press any key to continue...");
+    Console.ReadKey();
+}
+
 foreach (var puzzle in input.Split('-'))
 {
 
