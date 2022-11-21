@@ -3,7 +3,8 @@ using WFC_Sudoku_Solver;
 
 // see https://www.youtube.com/watch?v=rI_y2GAlQFM for the general theory on the WFC algo
 
-// read the input, by default it has 4 puzzles from easy to hard difficulty
+// read the input, by default it has 5 puzzles from easy to hard difficulty with the 
+// last puzzle being the 'hardest possible sudoku' from here: https://abcnews.go.com/blogs/headlines/2012/06/can-you-solve-the-hardest-ever-sudoku
 var input = File.ReadAllText("input.txt");
 
 // writing to console is fairly slow actually so if you want to measure performance set this to false:
@@ -45,6 +46,12 @@ foreach (var puzzle in input.Split('-'))
         }
 
         board.Collapse();
+
+        if (!board.IsValid())
+        {
+            board = snapshot.Clone();
+            continue;
+        }
 
         if (demoMode)
         {

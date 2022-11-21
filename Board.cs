@@ -82,9 +82,21 @@
 
             var lowestEntropy = entropyGroupings.First().ToList();
 
-            var tile = lowestEntropy[Rand.Get(0, lowestEntropy.Count)];
-
-            tile.Solve(tile.GetRandomPossibleValue());
+            if (lowestEntropy[0].GetEntropy() == 1)
+            {
+                // solve all tiles that only have one possible value
+                // greatly speeds up process and helps fail quicker when
+                // we are on the wrong track
+                foreach (var tile in lowestEntropy)
+                {
+                    tile.Solve(tile.GetRandomPossibleValue());
+                }
+            }
+            else
+            {
+                var tile = lowestEntropy[Rand.Get(0, lowestEntropy.Count)];
+                tile.Solve(tile.GetRandomPossibleValue());
+            }
         }
 
         public Tile GetTile(int x, int y)
@@ -114,7 +126,6 @@
 
                     if (!hash.Add(tile.Value))
                     {
-                        Console.WriteLine($"Invalid value: {tile.X}: {tile.Y} = {tile.Value}");
                         return false;
                     }
                 }
