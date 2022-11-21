@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace WFC_Sudoku_Solver
+﻿namespace WFC_Sudoku_Solver
 {
     public static class Draw
     {
@@ -15,7 +13,6 @@ namespace WFC_Sudoku_Solver
                 }
                 for (int y = 0; y < 9; y++)
                 {
-                    
                     if (y % 3 == 0)
                     {
                         Console.ForegroundColor = ConsoleColor.White;

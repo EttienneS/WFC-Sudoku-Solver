@@ -15,7 +15,8 @@
             var lines = input.Trim().Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             for (int x = 0; x < lines.Length; x++)
             {
-                var line = lines[x].Trim();
+                // change . to 0 to allow support for importing from https://qqwing.com/generate.html easily
+                var line = lines[x].Replace('.', '0').Trim();
                 for (int y = 0; y < line.Length; y++)
                 {
                     _board.Add(new Tile(x, y, int.Parse(line[y].ToString())));
@@ -86,6 +87,17 @@
             tile.Solve(tile.GetRandomPossibleValue());
         }
 
+        public Tile GetTile(int x, int y)
+        {
+            // todo: this can be sped up by using a lookup with the X/Y coord as the key
+            return _board.First(t => t.X == x && t.Y == y);
+        }
+
+        public bool IsSolved()
+        {
+            return _board.All(t => t.IsSolved());
+        }
+
         public bool IsValid()
         {
             return ValidateSet(_rows) && ValidateSet(_columns) && ValidateSet(_squares);
@@ -109,18 +121,6 @@
             }
             return true;
         }
-
-        public Tile GetTile(int x, int y)
-        {
-            // todo: this can be sped up by using a lookup with the X/Y coord as the key
-            return _board.First(t => t.X == x && t.Y == y);
-        }
-
-        public bool IsSolved()
-        {
-            return _board.All(t => t.IsSolved());
-        }
-
         private void CalculateRowsAndColumns()
         {
             _columns = _board.GroupBy(g => g.Y).Select(r => r.ToList()).ToList();

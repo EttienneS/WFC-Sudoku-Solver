@@ -21,6 +21,5 @@
         {
             return _random.Next(min, max);
         }
-
     }
 }
