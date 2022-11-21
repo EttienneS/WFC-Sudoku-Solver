@@ -86,7 +86,8 @@
             {
                 // solve all tiles that only have one possible value
                 // greatly speeds up process and helps fail quicker when
-                // we are on the wrong track
+                // we are on the wrong track (this needs a validation check to happen)
+                // right after the collapse step or we could go down an incorrect tangent
                 foreach (var tile in lowestEntropy)
                 {
                     tile.Solve(tile.GetRandomPossibleValue());
