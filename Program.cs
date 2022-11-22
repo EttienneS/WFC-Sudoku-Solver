@@ -67,9 +67,9 @@ foreach (var puzzle in input.Split('-'))
             Draw.Board(board);
             Thread.Sleep(100);
         }
-        else if (i % 100 == 0)
+        else if (i % 1000 == 0)
         {
-            Console.WriteLine(i);
+            Console.Write(".");
         }
     }
 

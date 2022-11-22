@@ -8,6 +8,8 @@
         private List<List<Tile>> _rows;
         private List<List<Tile>> _squares;
 
+        private Dictionary<Tile, (List<Tile> row, List<Tile> column, List<Tile> square)> _tileLookup;
+
         public Board(string input)
         {
             _board = new List<Tile>();
@@ -51,9 +53,10 @@
             {
                 var open = Constants.AllValues.ToList();
 
-                var closedRow = GetClosed(GetRow(tile));
-                var closedColumn = GetClosed(GetColumn(tile));
-                var closedSquare = GetClosed(GetSquare(tile));
+                var lookup = _tileLookup[tile];
+                var closedRow = GetClosed(lookup.row);
+                var closedColumn = GetClosed(lookup.column);
+                var closedSquare = GetClosed(lookup.square);
 
                 foreach (var value in closedRow.Concat(closedColumn).Concat(closedSquare))
                 {
@@ -159,26 +162,21 @@
                     _squares.Add(square);
                 }
             }
+
+            _tileLookup = new Dictionary<Tile, (List<Tile> row, List<Tile> column, List<Tile> square)>();
+            foreach (var tile in _board)
+            {
+                var column = _columns.First(c => c.Contains(tile));
+                var row = _rows.First(r => r.Contains(tile));
+                var square = _squares.First(s => s.Contains(tile));
+
+                _tileLookup.Add(tile, (row, column, square));
+            }
         }
 
         private IEnumerable<int> GetClosed(IEnumerable<Tile> tiles)
         {
             return tiles.Where(s => s.IsSolved()).Select(s => s.Value);
-        }
-
-        private List<Tile> GetColumn(Tile tile)
-        {
-            return _columns.First(c => c.Contains(tile));
-        }
-
-        private List<Tile> GetRow(Tile tile)
-        {
-            return _rows.First(r => r.Contains(tile));
-        }
-
-        private List<Tile> GetSquare(Tile tile)
-        {
-            return _squares.First(s => s.Contains(tile));
         }
     }
 }

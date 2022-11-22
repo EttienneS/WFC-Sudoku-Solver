@@ -12,13 +12,15 @@ See https://www.youtube.com/watch?v=rI_y2GAlQFM for a nice video on how it works
 
 When not in demo mode it generally solves the puzzles in:
 
-Simple: ~30ms
-Easy:  ~50ms
+Simple: ~1ms
+Easy:  ~40ms
 Medium: ~55ms
-Hard: ~200ms
-Hardest: ~20000ms
+Hard: ~300ms
+Hardest: ~25000ms
 
 Because of the random nature of WFC solve times can vary greatly, I have seen hardest solve in 4 000ms and other times 35 000 ms. But it will always find a solution eventually.
+
+This can also generate puzzles, this can be done in ~40ms
 
 ## Improvement
 
